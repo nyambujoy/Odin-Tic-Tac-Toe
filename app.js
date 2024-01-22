@@ -1,38 +1,38 @@
+const turnDisplay = document.getElementById("turnDisplay");
+const restartBtn = document.querySelector(".restart")
+const resultDisplay = document.getElementById("result")
+const allCards = document.querySelectorAll(".cards")
 
+// console.log(restartBtn)
+let currentPlayer = "X"
 
-function handleGame() {
-    const turnDisplay = document.getElementById("turnDisplay");
-
-    const resultDisplay = document.getElementById("result")
-    const allCards = document.querySelectorAll(".cards")
-
-
-
-
-    // console.log(restartBtn)
-    let currentPlayer = "X"
-    handleEventListeners(allCards)
-    function handleMove() {
-        if (card.textcontent === "") {
-            card.textcontent = currentPlayer
+allCards.forEach(card => {
+    card.addEventListener("click", function () {
+        if (card.textContent === "") {
+            card.textContent = currentPlayer;
         }
 
         if (checkWinner(currentPlayer)) {
-            resultDisplay.textContent = `Game over! ${currentPlayer} wins!`
-            return
-        }
-        if (checkTie) {
-            resultDisplay.textContent = `Game over You Tied`
-            return
+            resultDisplay.textContent = `Game over! ${currentPlayer} wins!`;
+            return;
         }
 
-        currentPlayer = (currentPlayer === "X" ? "O" : "X")
-        turnDisplay.textContent = `${currentPlayer}'s Turn`
-    }
+        if (checkTie()) {
+            resultDisplay.textContent = `Game over! It's a tie!`;
+            return;
+        }
 
-    return handleMove()
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        turnDisplay.textContent = `${currentPlayer}'s Turn`;
+    });
+});
 
-}
+
+
+
+
+
+
 
 function checkWinner(currentPlayer) {
     let winningComb = [
@@ -47,7 +47,7 @@ function checkWinner(currentPlayer) {
     ]
 
     for (let i = 0; i < winningComb.length; i++) {
-        [a, b, c] = combination[i];
+        [a, b, c] = winningComb[i];
         if (allCards[a].textContent === currentPlayer && allCards[b].textContent === currentPlayer && allCards[c].textContent === currentPlayer) {
             return true
         }
@@ -74,27 +74,18 @@ function restartGame() {
         allCards[i].textContent = ""
     }
     currentPlayer = "X"
-    endMessage.textContent = ""
-}
-
-function handleEventListeners(allCards) {
-
-    allCards.forEach(card => {
-        card.addEventListener("click", handleMove(card))
-
-    });
-    const restartBtn = document.querySelector(".restart")
-
-    restartBtn.addEventListener("click", restartGame)
-
-    // return {
-    //     startGame: function () {
-    //         handleEventListeners();
-    //     }
-    // };
+    resultDisplay.textContent = `Games challenge the mind ->`
 }
 
 
 
-gameController = handleGame()
-console.log(gameController)
+
+
+
+restartBtn.addEventListener("click", restartGame)
+
+
+
+
+
+
